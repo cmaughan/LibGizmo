@@ -43,7 +43,7 @@ public:
 	virtual void OnMouseMove(unsigned int x, unsigned int y);
 	virtual void OnMouseUp(unsigned int x, unsigned int y);
 
-	virtual void Draw();
+	virtual void Draw(IGizmoTransformRender* pRender);
 
     /*
 	void SetScaleSnap(float snap)

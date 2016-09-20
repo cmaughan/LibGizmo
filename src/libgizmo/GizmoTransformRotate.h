@@ -32,59 +32,59 @@
 
 #include "GizmoTransform.h"
 
-class CGizmoTransformRotate : public CGizmoTransform  
+class CGizmoTransformRotate : public CGizmoTransform
 {
 
 public:
-	CGizmoTransformRotate();
-	virtual ~CGizmoTransformRotate();
+    CGizmoTransformRotate();
+    virtual ~CGizmoTransformRotate();
 
-	// return true if gizmo transform capture mouse
-	virtual bool OnMouseDown(unsigned int x, unsigned int y);
-	virtual void OnMouseMove(unsigned int x, unsigned int y);
-	virtual void OnMouseUp(unsigned int x, unsigned int y);
+    // return true if gizmo transform capture mouse
+    virtual bool OnMouseDown(unsigned int x, unsigned int y);
+    virtual void OnMouseMove(unsigned int x, unsigned int y);
+    virtual void OnMouseUp(unsigned int x, unsigned int y);
 
-	virtual void Draw();
+    virtual void Draw(IGizmoTransformRender* pREnder);
 
-    virtual void SetSnap(const float snap) {m_AngleSnap = snap; }
+    virtual void SetSnap(const float snap) { m_AngleSnap = snap; }
     virtual void SetSnap(float snapx, float snapy, float snapz) {}
     /*
-	void SetAngleSnap(float snap)
-	{
-		m_AngleSnap = snap;
-	}
+    void SetAngleSnap(float snap)
+    {
+        m_AngleSnap = snap;
+    }
     */
 
-	float GetAngleSnap()
-	{
-		return m_AngleSnap;
-	}
+    float GetAngleSnap()
+    {
+        return m_AngleSnap;
+    }
 
-	virtual void ApplyTransform(tvector3& trans, bool bAbsolute);
+    virtual void ApplyTransform(tvector3& trans, bool bAbsolute);
 
 protected:
-	enum ROTATETYPE
-	{
-		ROTATE_NONE,
-		ROTATE_X,
-		ROTATE_Y,
-		ROTATE_Z,
-		ROTATE_SCREEN,
-		ROTATE_TWIN
-	};
-	ROTATETYPE m_RotateType,m_RotateTypePredict;
-	tplane m_plan;
-	tvector3 m_LockVertex,m_LockVertex2;
-	float m_Ng2;
-	tvector3 m_Vtx,m_Vty,m_Vtz;
-	tvector3 m_Axis,m_Axis2;
-	tmatrix m_OrigScale,m_InvOrigScale;
-	float m_AngleSnap;
+    enum ROTATETYPE
+    {
+        ROTATE_NONE,
+        ROTATE_X,
+        ROTATE_Y,
+        ROTATE_Z,
+        ROTATE_SCREEN,
+        ROTATE_TWIN
+    };
+    ROTATETYPE m_RotateType, m_RotateTypePredict;
+    tplane m_plan;
+    tvector3 m_LockVertex, m_LockVertex2;
+    float m_Ng2;
+    tvector3 m_Vtx, m_Vty, m_Vtz;
+    tvector3 m_Axis, m_Axis2;
+    tmatrix m_OrigScale, m_InvOrigScale;
+    float m_AngleSnap;
 
 
-	bool GetOpType(ROTATETYPE &type, unsigned int x, unsigned int y);
-	bool CheckRotatePlan(tvector3 &vNorm, float factor, const tvector3 &rayOrig,const tvector3 &rayDir,int id);
-	void Rotate1Axe(const tvector3& rayOrigin,const tvector3& rayDir);
+    bool GetOpType(ROTATETYPE &type, unsigned int x, unsigned int y);
+    bool CheckRotatePlan(tvector3 &vNorm, float factor, const tvector3 &rayOrig, const tvector3 &rayDir, int id);
+    void Rotate1Axe(const tvector3& rayOrigin, const tvector3& rayDir);
 
 };
 

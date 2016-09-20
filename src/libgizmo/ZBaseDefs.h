@@ -30,12 +30,6 @@
 #ifndef ZBASEDEFS_H__
 #define ZBASEDEFS_H__
 
-#ifdef WIN32
-#include <windows.h>
-#include <stdlib.h>
-#endif
-
-
 typedef unsigned long tulong;
 typedef long tlong;
 typedef double tdouble;
@@ -56,10 +50,8 @@ typedef int int32;
 typedef unsigned short TClassID;
 
 typedef unsigned int uint;
-#define SAFE_DELETE(x) if (x) { delete x; x = NULL; }
 #define    FLOAT_EPSILON    float(1.192092896e-07)    // Smallest positive number x, such that x+1.0 is not equal to 1.0
 const float        RealEpsilon=FLOAT_EPSILON*16.f;
-
 
 #define ZMAX(a,b)            (((a) > (b)) ? (a) : (b))
 #define ZMIN(a,b)            (((a) < (b)) ? (a) : (b))
@@ -68,11 +60,6 @@ inline bool isPowerOf2(unsigned int n)
 {
     return n == 1 || (n & (n-1)) == 0;
 }
-
-#include <vector>
-#include <list>
-#include <map>
-#include <string>
 
 #define tarray std::vector
 #define tlist std::list

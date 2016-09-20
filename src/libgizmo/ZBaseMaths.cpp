@@ -393,7 +393,7 @@ float tmatrix::Inverse(const tmatrix &srcMatrix, bool affine )
         m16[15] = (tmp[10] * src[10] + tmp[4]  * src[8]  + tmp[9]  * src[9])  - (tmp[8]  * src[9]  + tmp[11] * src[10] + tmp[5]  * src[8]);
 
         // calculate determinant
-        float det = src[0]*m16[0]+src[1]*m16[1]+src[2]*m16[2]+src[3]*m16[3];
+        det = src[0]*m16[0]+src[1]*m16[1]+src[2]*m16[2]+src[3]*m16[3];
 
         // calculate matrix inverse
         float invdet = 1 / det;
@@ -504,7 +504,7 @@ float tmatrix::Inverse(bool affine)
         m16[15] = (tmp[10] * src[10] + tmp[4]  * src[8]  + tmp[9]  * src[9])  - (tmp[8]  * src[9]  + tmp[11] * src[10] + tmp[5]  * src[8]);
 
         // calculate determinant
-        float det = src[0]*m16[0]+src[1]*m16[1]+src[2]*m16[2]+src[3]*m16[3];
+        det = src[0]*m16[0]+src[1]*m16[1]+src[2]*m16[2]+src[3]*m16[3];
 
         // calculate matrix inverse
         float invdet = 1 / det;

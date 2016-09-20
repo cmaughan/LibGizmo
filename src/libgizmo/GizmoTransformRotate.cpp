@@ -26,7 +26,7 @@
 // SOFTWARE.
 // 
 
-
+#include "MCCommon.h"
 #include "stdafx.h"
 #include "GizmoTransformRotate.h"
 #ifdef MAC_OS
@@ -41,7 +41,7 @@
 extern tvector3 ptd;
 
 
-IGizmo *CreateRotateGizmo()
+CORE_EXPORT IGizmo *CreateRotateGizmo()
 {
     return new CGizmoTransformRotate;
 }
@@ -310,7 +310,7 @@ void CGizmoTransformRotate::OnMouseUp(unsigned int x, unsigned int y)
             sprintf(tmps, "%5.2f %5.2f %5.2f %5.2f", plCam.x, plCam.y, plCam.z, plCam.w );
             MessageBoxA(NULL, tmps, tmps, MB_OK);
             */
-void CGizmoTransformRotate::Draw()
+void CGizmoTransformRotate::Draw(IGizmoTransformRender* pRender)
 {
     if (m_pMatrix)
     {
@@ -364,18 +364,18 @@ void CGizmoTransformRotate::Draw()
         {
 
             if (m_RotateTypePredict != ROTATE_TWIN)
-                DrawCircle(orig, 0.2f,0.2f,0.2f,right*GetScreenFactor(),up*GetScreenFactor());
+                pRender->DrawCircle(orig, 0.2f,0.2f,0.2f,right*GetScreenFactor(),up*GetScreenFactor());
             else
-                DrawCircle(orig, 1,1,1,right*GetScreenFactor(),up*GetScreenFactor());
+                pRender->DrawCircle(orig, 1,1,1,right*GetScreenFactor(),up*GetScreenFactor());
         }
 
         // Screen
         if (mMask&AXIS_SCREEN)
         {
             if (m_RotateTypePredict != ROTATE_SCREEN)
-                DrawCircle(orig, 1.0f,0.3f,1.0f,up*1.2f*GetScreenFactor(),right*1.2f*GetScreenFactor());
+                pRender->DrawCircle(orig, 1.0f,0.3f,1.0f,up*1.2f*GetScreenFactor(),right*1.2f*GetScreenFactor());
             else
-                DrawCircle(orig, 1,1,1,up*1.2f*GetScreenFactor(),right*1.2f*GetScreenFactor());
+                pRender->DrawCircle(orig, 1,1,1,up*1.2f*GetScreenFactor(),right*1.2f*GetScreenFactor());
         }
 
         // X
@@ -388,9 +388,9 @@ void CGizmoTransformRotate::Draw()
         if (mMask&AXIS_X)
         {
             if (m_RotateTypePredict != ROTATE_X)
-                DrawCircleHalf(orig, 1,0,0,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
+                pRender->DrawCircleHalf(orig, 1,0,0,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
             else
-                DrawCircleHalf(orig, 1,1,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
+                pRender->DrawCircleHalf(orig, 1,1,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
         }
 
         // Y
@@ -405,9 +405,9 @@ void CGizmoTransformRotate::Draw()
         {
 
             if (m_RotateTypePredict != ROTATE_Y)
-                DrawCircleHalf(orig, 0,1,0,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
+                pRender->DrawCircleHalf(orig, 0,1,0,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
             else
-                DrawCircleHalf(orig, 1,1,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
+                pRender->DrawCircleHalf(orig, 1,1,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
         }
 
         // Z
@@ -420,13 +420,13 @@ void CGizmoTransformRotate::Draw()
         if (mMask&AXIS_Z)
         {
             if (m_RotateTypePredict != ROTATE_Z)
-                DrawCircleHalf(orig, 0,0,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
+                pRender->DrawCircleHalf(orig, 0,0,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
             else
-                DrawCircleHalf(orig, 1,1,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
+                pRender->DrawCircleHalf(orig, 1,1,1,right*GetScreenFactor(),frnt*GetScreenFactor(),plCam);
         }
         // camembert
         if ( (m_RotateType != ROTATE_NONE) && (m_RotateType != ROTATE_TWIN ) )
-            DrawCamem(orig,m_Vtx*GetScreenFactor(),m_Vty*GetScreenFactor(),-m_Ng2);
+            pRender->DrawCamem(orig,m_Vtx*GetScreenFactor(),m_Vty*GetScreenFactor(),-m_Ng2);
         /*
         // debug
         glPointSize(20);

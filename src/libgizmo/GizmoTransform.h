@@ -32,11 +32,9 @@
 #include "GizmoTransformRender.h"
 #include "IGizmo.h"
 
-class CGizmoTransform : public IGizmo , protected CGizmoTransformRender
+class CGizmoTransform : public IGizmo 
 {
 public:
-
-
 
 	CGizmoTransform()
 	{
