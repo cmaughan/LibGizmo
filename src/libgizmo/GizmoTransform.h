@@ -188,6 +188,10 @@ public:
 */
 	void ComputeScreenFactor()
 	{
+        if (!m_pMatrix)
+        {
+            return;
+        }
         tmatrix viewproj = m_Model * m_Proj;
 
         tvector4 trf = vector4( m_pMatrix->V4.position.x, m_pMatrix->V4.position.y, m_pMatrix->V4.position.z, 1.f);
