@@ -186,8 +186,6 @@ void CGizmoTransformMove::OnMouseMove(unsigned int x, unsigned int y)
         m_pMatrix->Multiply(mt);
         //if (mTransform) mTransform->Update();
 
-        if (mEditPos)
-            *mEditPos = m_pMatrix->V4.position;
     }
     else
     {
@@ -247,64 +245,7 @@ void CGizmoTransformMove::Draw(IGizmoTransformRender* pRender)
         //plan3
         if (m_MoveTypePredict != MOVE_Z) pRender->DrawAxis(orig, axeZ, axeX, axeY, 0.05f, 0.83f, vector4(0, 0, 1, 1));
         else pRender->DrawAxis(orig, axeZ, axeX, axeY, 0.05f, 0.83f, vector4(1, 1, 1, 1));
-#if 0
-#ifdef WIN32
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-#endif
-        extern RenderingState_t GRenderingState;
-        GRenderingState.mAlphaTestEnable = 0;
-        GRenderingState.mZWriteEnable = 1;
-        GRenderingState.mBlending = 0;
-        GRenderingState.mCulling = 0;
-        GRenderingState.mZTestType = 1;
-#endif
-        /*
-
-        PSM_LVERTEX svVts[2];
-            svVts[0].x = ptd.x;
-            svVts[0].y = ptd.y;
-            svVts[0].z = ptd.z;
-            svVts[0].diffuse = 0xFFFFFFFF;
-
-            svVts[1].x = ptd.x+10;
-            svVts[1].y = ptd.y+10;
-            svVts[1].z = ptd.z+10;
-            svVts[1].diffuse = 0xFFFFFFFF;
-
-
-            IDirect3DDevice9 *pDev = ((PSM_D3D9RenderDevice*)PSM_D3D9RenderDevice::GetInterfacePtr())->d3dDevice;
-            pDev->DrawPrimitiveUP(D3DPT_LINESTRIP , 1, svVts, sizeof(PSM_LVERTEX));
-            */
-    }
-    /*
-            // debug
-            glPointSize(20);
-            glBegin(GL_POINTS);
-            glVertex3fv(&ptd.x);
-            glEnd();
-
-            glEnable(GL_DEPTH_TEST);
-    */
-
-}
-
-void CGizmoTransformMove::ApplyTransform(tvector3& trans, bool bAbsolute)
-{
-    if (bAbsolute)
-    {
-        m_pMatrix->m16[12] = trans.x;
-        m_pMatrix->m16[13] = trans.y;
-        m_pMatrix->m16[14] = trans.z;
-    }
-    else
-    {
-        m_pMatrix->m16[12] += trans.x;
-        m_pMatrix->m16[13] += trans.y;
-        m_pMatrix->m16[14] += trans.z;
     }
 }
+
 

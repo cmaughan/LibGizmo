@@ -76,7 +76,6 @@ bool CGizmoTransformScale::GetOpType(SCALETYPE &type, unsigned int x, unsigned i
     mt.NoTrans();
     mt.Inverse();
 
-
     //tmatrix mt;
     if (mLocation == LOCATE_LOCAL)
     {
@@ -188,28 +187,6 @@ void CGizmoTransformScale::OnMouseMove(unsigned int x, unsigned int y)
             float len = sqrtf((float)(difx*difx) + (float)(dify*dify));
 
             float lng2 = len / 100.f;
-            /*
-            float lng2 = ( df.Dot(m_LockVertex));
-            char tmps[512];
-            sprintf(tmps, "%5.4f\n", lng2 );
-            OutputDebugStringA( tmps );
-
-
-            if (lng2 < 1.f)
-            {
-                if ( lng2<= 0.001f )
-                    lng2 = 0.001f;
-                else
-                {
-                    //lng2+=4.f;
-                    lng2/=5.f;
-                }
-            }
-            else
-            {
-                int a = 1;
-            }
-            */
             SnapScale(lng2);
             scVect *= lng2;
             scVect += scVect2;
@@ -217,9 +194,6 @@ void CGizmoTransformScale::OnMouseMove(unsigned int x, unsigned int y)
 
 
         tmatrix mt, mt2;
-
-
-
         mt.Scaling(scVect);
 
         mt2.Identity();
@@ -227,19 +201,15 @@ void CGizmoTransformScale::OnMouseMove(unsigned int x, unsigned int y)
         mt2.SetLine(1, GetTransformedVector(1));
         mt2.SetLine(2, GetTransformedVector(2));
 
-        //mt2.Translation(0,0,0);
-        //mt.Multiply(mt2);
-
         if (mLocation == LOCATE_WORLD)
         {
             mt2 = mt * m_svgMatrix;
         }
         else
         {
-            mt2 = mt * m_svgMatrix;//.Multiply(m_svgMatrix);
+            mt2 = mt * m_svgMatrix;
         }
         *m_pMatrix = mt2;
-        //if (mTransform) mTransform->Update();
     }
     else
     {
@@ -249,7 +219,6 @@ void CGizmoTransformScale::OnMouseMove(unsigned int x, unsigned int y)
             GetOpType(m_ScaleTypePredict, x, y);
         }
     }
-
 }
 
 void CGizmoTransformScale::OnMouseUp(unsigned int x, unsigned int y)
@@ -263,9 +232,7 @@ void CGizmoTransformScale::Draw(IGizmoTransformRender* pRender)
     {
         ComputeScreenFactor();
 
-        //glDisable(GL_DEPTH_TEST);
         tvector3 orig(m_pMatrix->m16[12], m_pMatrix->m16[13], m_pMatrix->m16[14]);
-
 
         // axis
         tvector3 axeX(1, 0, 0), axeY(0, 1, 0), axeZ(0, 0, 1);
@@ -305,68 +272,5 @@ void CGizmoTransformScale::Draw(IGizmoTransformRender* pRender)
             pRender->DrawAxis(orig, axeZ, axeX, axeY, 0.05f, 0.83f, vector4(0, 0, 1, 1));
         else
             pRender->DrawAxis(orig, axeZ, axeX, axeY, 0.05f, 0.83f, vector4(1, 1, 1, 1));
-
-        /*
-                // debug
-                glPointSize(20);
-                glBegin(GL_POINTS);
-                glVertex3fv(&ptd.x);
-                glEnd();
-
-                glEnable(GL_DEPTH_TEST);
-                */
-#if 0
-#ifdef WIN32
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ZENABLE, D3DZB_TRUE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-        GDD->GetD3D9Device()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-#endif
-        extern RenderingState_t GRenderingState;
-        GRenderingState.mAlphaTestEnable = 0;
-        GRenderingState.mZWriteEnable = 1;
-        GRenderingState.mBlending = 0;
-        GRenderingState.mCulling = 0;
-        GRenderingState.mZTestType = 1;
-#endif
     }
-
-
-}
-
-void CGizmoTransformScale::ApplyTransform(tvector3& trans, bool bAbsolute)
-{
-    if (bAbsolute)
-    {
-        tmatrix m_InvOrigScale, m_OrigScale;
-
-        m_OrigScale.Scaling(GetTransformedVector(0).Length(),
-            GetTransformedVector(1).Length(),
-            GetTransformedVector(2).Length());
-
-        m_InvOrigScale.Inverse(m_OrigScale);
-        m_svgMatrix = *m_pMatrix;
-
-        tmatrix mt;
-        mt.Scaling(trans.x / 100.0f, trans.y / 100.0f, trans.z / 100.0f);
-        mt.Multiply(m_InvOrigScale);
-        mt.Multiply(m_svgMatrix);
-        *m_pMatrix = mt;
-    }
-    else
-    {
-        tmatrix mt, mt2;
-        m_svgMatrix = *m_pMatrix;
-        mt.Scaling(trans.x / 100.0f, trans.y / 100.0f, trans.z / 100.0f);
-
-        mt2.SetLine(0, GetTransformedVector(0));
-        mt2.SetLine(1, GetTransformedVector(1));
-        mt2.SetLine(2, GetTransformedVector(2));
-        mt2.Translation(0, 0, 0);
-        mt.Multiply(mt2);
-        mt.Multiply(m_svgMatrix);
-        *m_pMatrix = mt;
-    }
-
 }

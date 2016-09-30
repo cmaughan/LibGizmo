@@ -60,8 +60,6 @@ public:
         return m_AngleSnap;
     }
 
-    virtual void ApplyTransform(tvector3& trans, bool bAbsolute);
-
 protected:
     enum ROTATETYPE
     {

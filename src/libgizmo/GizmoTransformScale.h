@@ -59,7 +59,6 @@ public:
 		return m_ScaleSnap;
 	}
 
-	virtual void ApplyTransform(tvector3& trans, bool bAbsolute);
 
 protected:
 	enum SCALETYPE

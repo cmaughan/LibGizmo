@@ -69,11 +69,14 @@ public:
     virtual void SetSnap(float snapx, float snapy, float snapz) = 0;
     virtual void SetSnap(const float snap) = 0;
 
-
     virtual void SetLocation(LOCATION aLocation)  = 0;
     virtual LOCATION GetLocation() = 0;
 	virtual void SetAxisMask(unsigned int mask) = 0;
 
+    virtual const float* GetUpdate() const
+    {
+        return nullptr;
+    }
     // rendering
 	virtual void Draw(IGizmoTransformRender* pRender) = 0;
 };

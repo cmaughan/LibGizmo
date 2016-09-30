@@ -253,8 +253,6 @@ public:
 	{
 		return m_bUseSnap;
 	}
-	//transform
-	virtual void ApplyTransform(tvector3& trans, bool bAbsolute) = 0;
 
     void SetLocation(LOCATION aLocation) { mLocation = aLocation; }
     LOCATION GetLocation() { return mLocation; }

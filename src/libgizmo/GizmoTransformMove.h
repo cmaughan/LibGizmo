@@ -34,53 +34,52 @@
 
 #include "GizmoTransform.h"
 
-class CGizmoTransformMove : public CGizmoTransform  
+class CGizmoTransformMove : public CGizmoTransform
 {
 
 public:
-	CGizmoTransformMove();
-	virtual ~CGizmoTransformMove();
+    CGizmoTransformMove();
+    virtual ~CGizmoTransformMove();
 
-	// return true if gizmo transform capture mouse
-	virtual bool OnMouseDown(unsigned int x, unsigned int y);
-	virtual void OnMouseMove(unsigned int x, unsigned int y);
-	virtual void OnMouseUp(unsigned int x, unsigned int y);
+    // return true if gizmo transform capture mouse
+    virtual bool OnMouseDown(unsigned int x, unsigned int y);
+    virtual void OnMouseMove(unsigned int x, unsigned int y);
+    virtual void OnMouseUp(unsigned int x, unsigned int y);
 
-	virtual void Draw(IGizmoTransformRender* pRender);
-	// snap
+    virtual void Draw(IGizmoTransformRender* pRender);
 
-	virtual void SetSnap(float snapx, float snapy, float snapz)
-	{
-		m_MoveSnap = tvector3(snapx, snapy, snapz);
-	}
+    virtual void SetSnap(float snapx, float snapy, float snapz)
+    {
+        m_MoveSnap = tvector3(snapx, snapy, snapz);
+    }
     virtual void SetSnap(const float snap) {}
 
-	tvector3 GetMoveSnap()
-	{
-		return m_MoveSnap;
-	}
+    tvector3 GetMoveSnap()
+    {
+        return m_MoveSnap;
+    }
 
-	virtual void ApplyTransform(tvector3& trans, bool bAbsolute);
-
+    const float* GetUpdate() const override
+    {
+        return m_pMatrix->V4.position;
+    }
 protected:
-	enum MOVETYPE
-	{
-		MOVE_NONE,
-		MOVE_X,
-		MOVE_Y,
-		MOVE_Z,
-		MOVE_XY,
-		MOVE_XZ,
-		MOVE_YZ,
-		MOVE_XYZ
-	};
-	MOVETYPE m_MoveType,m_MoveTypePredict;
-	//tplane m_plan;
-	//tvector3 m_LockVertex;
-	tvector3 m_MoveSnap;
+    enum MOVETYPE
+    {
+        MOVE_NONE,
+        MOVE_X,
+        MOVE_Y,
+        MOVE_Z,
+        MOVE_XY,
+        MOVE_XZ,
+        MOVE_YZ,
+        MOVE_XYZ
+    };
+    MOVETYPE m_MoveType, m_MoveTypePredict;
+    tvector3 m_MoveSnap;
 
-	bool GetOpType(MOVETYPE &type, unsigned int x, unsigned int y);
-	tvector3 RayTrace(tvector3& rayOrigin, tvector3& rayDir, tvector3& norm);
+    bool GetOpType(MOVETYPE &type, unsigned int x, unsigned int y);
+    tvector3 RayTrace(tvector3& rayOrigin, tvector3& rayDir, tvector3& norm);
 };
 
 #endif // !defined(AFX_GIZMOTRANSFORMMOVE_H__8276C568_C663_463C_AE7F_B913E2A712A4__INCLUDED_)
