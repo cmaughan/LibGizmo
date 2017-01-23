@@ -57,7 +57,7 @@ public:
 
 
 
-	virtual void SetEditMatrix(float *pMatrix)
+	virtual void SetEditMatrix(const float *pMatrix)
 	{
 		m_pMatrix = (tmatrix*)pMatrix;
         //mTransform = NULL;
